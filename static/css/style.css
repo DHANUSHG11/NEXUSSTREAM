@@ -1,0 +1,673 @@
+/* =========================================
+   1. GLOBAL DARK THEME
+========================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #121212;
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: inherit;
+}
+
+/* =========================================
+   2. HEADER / NAVIGATION
+========================================= */
+
+header {
+    background-color: #1e1e1e;
+    min-height: 72px;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+header nav,
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+header nav > a,
+.nav-menu > a {
+    color: #e0e0e0;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+header nav > a:hover,
+.nav-menu > a:hover {
+    color: #4CAF50;
+}
+
+/* =========================================
+   3. PROFILE
+========================================= */
+
+.profile-container {
+    position: relative;
+}
+
+.profile-button {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    background: transparent;
+    border: 0;
+    color: #e0e0e0;
+    font: inherit;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.profile-button:hover {
+    color: #4CAF50;
+}
+
+.profile-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #444;
+    display: block;
+}
+
+.profile-dropdown {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    width: 190px;
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+}
+
+.profile-container:hover .profile-dropdown,
+.profile-container:focus-within .profile-dropdown {
+    display: flex;
+}
+
+.profile-welcome {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px;
+    border-bottom: 1px solid #333;
+    margin-bottom: 4px;
+}
+
+.profile-dropdown a {
+    color: #dddddd;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 7px;
+    font-size: 14px;
+}
+
+.profile-dropdown a:hover {
+    background-color: #2a2a2a;
+    color: #4CAF50;
+}
+
+.profile-dropdown .signout-link {
+    color: #ff7676;
+}
+
+.profile-dropdown .signout-link:hover {
+    color: #ff8f8f;
+}
+
+/* =========================================
+   4. FLASH MESSAGES
+========================================= */
+
+.flash-container {
+    max-width: 1400px;
+    margin: 18px auto 0;
+    padding: 0 30px;
+}
+
+.flash-message {
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background-color: #222;
+}
+
+.flash-message.success {
+    border-color: #2e7d32;
+    background-color: #17351a;
+}
+
+.flash-message.error {
+    border-color: #a94442;
+    background-color: #3a1919;
+}
+
+/* =========================================
+   5. HOME PAGE
+========================================= */
+
+.home-page {
+    width: 100%;
+}
+
+.home-heading {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 35px 30px 5px;
+}
+
+.home-heading h1 {
+    margin: 0 0 8px;
+    font-size: 32px;
+}
+
+.home-heading p {
+    margin: 0;
+    color: #aaa;
+}
+
+/* =========================================
+   6. CATEGORY FILTERS
+========================================= */
+
+.category-filters {
+    display: flex;
+    gap: 12px;
+    padding: 20px 30px 5px;
+    flex-wrap: wrap;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.category-filters a {
+    display: inline-block;
+    background-color: #2b2b2b;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 9px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    border: 1px solid #444;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.category-filters a:hover {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+    transform: translateY(-1px);
+}
+
+/* =========================================
+   7. VIDEO GRID
+========================================= */
+
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* =========================================
+   8. VIDEO CARD
+========================================= */
+
+.video-card {
+    background-color: #1e1e1e;
+    border: 1px solid #292929;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s, border-color 0.2s;
+}
+
+.video-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
+    border-color: #3d3d3d;
+}
+
+.video-card > a {
+    display: block;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.video-thumbnail {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: #000000;
+    overflow: hidden;
+}
+
+.video-thumbnail video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.video-card-content {
+    padding: 18px;
+}
+
+.video-card h3 {
+    margin: 0 0 10px;
+    font-size: 18px;
+}
+
+.video-card p {
+    color: #cccccc;
+    margin: 7px 0;
+    font-size: 14px;
+}
+
+.video-card .video-uploader {
+    color: #aaaaaa;
+}
+
+.video-card .video-category {
+    display: inline-block;
+    color: #ffffff;
+    background-color: #333333;
+    border-radius: 14px;
+    padding: 4px 9px;
+    font-size: 12px;
+}
+
+.video-card .video-date {
+    color: #888888;
+}
+
+/* =========================================
+   9. EMPTY VIDEO FEED
+========================================= */
+
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    background-color: #1e1e1e;
+    border: 1px dashed #444;
+    border-radius: 12px;
+    padding: 55px 20px;
+}
+
+.empty-state h2 {
+    margin-top: 0;
+}
+
+.empty-state p {
+    color: #aaa;
+    margin-bottom: 25px;
+}
+
+/* =========================================
+   10. BUTTONS
+========================================= */
+
+.primary-button {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: #ffffff;
+    border: 0;
+    border-radius: 7px;
+    padding: 11px 18px;
+    text-decoration: none;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.primary-button:hover {
+    background-color: #43a047;
+    transform: translateY(-1px);
+}
+
+/* =========================================
+   11. AUTH PAGES
+========================================= */
+
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+}
+
+.auth-container {
+    width: min(100%, 430px);
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 35px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.auth-container h1 {
+    margin: 0 0 25px;
+    text-align: center;
+}
+
+.auth-container h1 a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.auth-container h2 {
+    margin-bottom: 8px;
+}
+
+.auth-subtitle,
+.auth-footer {
+    color: #aaa;
+}
+
+.auth-container form {
+    margin-top: 25px;
+}
+
+.auth-container label,
+.form-container label {
+    display: block;
+    margin-bottom: 7px;
+    color: #dddddd;
+    font-weight: 500;
+}
+
+.auth-container input,
+.form-container input,
+.form-container textarea {
+    width: 100%;
+    padding: 12px 13px;
+    margin-bottom: 18px;
+    background-color: #121212;
+    color: #ffffff;
+    border: 1px solid #444;
+    border-radius: 7px;
+    font: inherit;
+}
+
+.auth-container input:focus,
+.form-container input:focus,
+.form-container textarea:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
+.auth-container .primary-button,
+.form-container .primary-button {
+    width: 100%;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.auth-footer a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* =========================================
+   12. UPLOAD / FORM PAGE
+========================================= */
+
+.form-page {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 45px 30px;
+}
+
+.form-container {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 35px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.form-container h1 {
+    margin-top: 0;
+}
+
+.form-subtitle {
+    color: #aaa;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 8px;
+}
+
+.form-container textarea {
+    resize: vertical;
+}
+
+.form-container input[type="file"] {
+    padding: 9px;
+}
+
+/* =========================================
+   13. WATCH PAGE
+========================================= */
+
+.watch-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+.custom-video-container {
+    background-color: #000;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    margin-bottom: 25px;
+}
+
+.custom-video-container video {
+    display: block;
+    width: 100%;
+    max-height: 70vh;
+}
+
+.video-information {
+    background-color: #1e1e1e;
+    border: 1px solid #292929;
+    border-radius: 10px;
+    padding: 25px;
+}
+
+.video-information h1 {
+    margin: 12px 0 10px;
+    font-size: 30px;
+}
+
+.video-information p {
+    color: #cccccc;
+    line-height: 1.6;
+}
+
+.video-category-badge {
+    display: inline-block;
+    background-color: #333333;
+    color: #ffffff;
+    border-radius: 15px;
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+.video-information .video-date {
+    color: #888888;
+}
+
+/* =========================================
+   14. RESPONSIVE LAYOUT
+========================================= */
+
+@media (max-width: 700px) {
+    header {
+        padding: 13px 18px;
+    }
+
+    .logo a {
+        font-size: 20px;
+    }
+
+    header nav,
+    .nav-menu {
+        gap: 10px;
+    }
+
+    .profile-button span {
+        display: none;
+    }
+
+    .home-heading,
+    .category-filters,
+    .video-grid,
+    .watch-page {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .video-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-container,
+    .form-container {
+        padding: 25px;
+    }
+}
+
+/* =========================================
+   15. PROFILE / ACCOUNT PAGES
+========================================= */
+
+.profile-edit-preview {
+    display: flex;
+    justify-content: center;
+    margin: 5px 0 25px;
+}
+
+.profile-large,
+.profile-placeholder {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #444;
+}
+
+.profile-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #2b2b2b;
+    color: #fff;
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.form-divider {
+    border: 0;
+    border-top: 1px solid #333;
+    margin: 25px 0;
+}
+
+.recovery-code {
+    text-align: center;
+    background: #121212;
+    border: 1px dashed #4CAF50;
+    color: #4CAF50;
+    border-radius: 8px;
+    padding: 18px;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    margin: 25px 0 15px;
+}
+
+.security-note {
+    color: #aaa;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.button-center {
+    display: block;
+    text-align: center;
+}
+
+.forgot-link {
+    margin-top: 14px;
+}
+
+
+/* Video owner actions */
+.video-owner-actions {
+    margin-top: 14px;
+    padding: 0 16px 16px;
+}
+
+.video-owner-actions form {
+    margin: 0;
+}
+
+.delete-button {
+    border: 0;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-weight: 600;
+    cursor: pointer;
+    background: #c62828;
+    color: #fff;
+}
+
+.delete-button:hover {
+    background: #a61f1f;
+}

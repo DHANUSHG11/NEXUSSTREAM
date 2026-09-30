@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ video.title }} - NEXUSTREAM</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdn.plyr.io/3.7.8/plyr.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <a href="{{ url_for('home') }}">NEXUSTREAM</a>
+        </div>
+
+        <nav class="nav-menu">
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('upload') }}">Upload Videos</a>
+                <div class="profile-container">
+                    <button class="profile-button" type="button">
+                        <img
+                            {% if current_user.profile_photo %}
+                            src="{{ url_for('media_profile', filename=current_user.profile_photo) }}"
+                            {% else %}
+                            src="{{ url_for('static', filename='profile_photos/default-avatar.svg') }}"
+                            {% endif %}
+                            alt="Profile Picture"
+                            class="profile-icon"
+                        >
+                        <span>{{ current_user.username }}</span>
+                    </button>
+
+                    <div class="profile-dropdown">
+                        <span class="profile-welcome">
+                            Hello, {{ current_user.username }}
+                        </span>
+                        <a href="{{ url_for('my_videos') }}">Your Videos</a>
+                        <a href="{{ url_for('profile') }}">Edit Profile</a>
+                        <a href="{{ url_for('logout') }}" class="signout-link">
+                            Sign Out
+                        </a>
+                    </div>
+                </div>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}">Register</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main class="watch-page">
+
+        <div class="custom-video-container">
+            <video id="player" playsinline controls>
+                <source
+                    src="{{ url_for('media_video', filename=video.file_path) }}"
+                    type="video/mp4">
+                Your browser does not support the video element.
+            </video>
+        </div>
+
+        <section class="video-information">
+            <span class="video-category-badge">{{ video.categories }}</span>
+            <h1>{{ video.title }}</h1>
+
+            <p class="video-uploader">
+                Uploaded by <strong>{{ video.uploader.username }}</strong>
+            </p>
+
+            {% if video.description %}
+                <p>{{ video.description }}</p>
+            {% endif %}
+
+            <p class="video-date">
+                Uploaded {{ video.upload_date.strftime('%B %d, %Y') }}
+            </p>
+
+            {% if current_user.is_authenticated and current_user.id == video.user_id %}
+                <div class="video-owner-actions">
+                    <form method="POST" action="{{ url_for('delete_video', video_id=video.id) }}" onsubmit="return confirm('Delete this video permanently?');">
+                        <button type="submit" class="delete-button">Delete Video</button>
+                    </form>
+                </div>
+            {% endif %}
+        </section>
+
+    </main>
+
+    <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>

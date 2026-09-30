@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUSTREAM - HOME</title>
+    
+    <style>
+        :root {
+            --bg-dark: #0f0f11;
+            --header-bg: #18181b;
+            --card-bg: #27272a;
+            --text-light: #f4f4f5;
+            --accent-blue: #3b82f6;
+            --accent-hover: #60a5fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background-color: var(--header-bg);
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav-menu > a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu > a:hover {
+            color: var(--accent-blue);
+        }
+
+        .profile-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            object-fit: cover;
+            border: 2px solid transparent;
+            transition: border 0.3s;
+        }
+
+        .profile-container:hover .profile-icon {
+            border: 2px solid var(--accent-blue);
+        }
+
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 55px;
+            background-color: var(--header-bg);
+            min-width: 200px;
+            box-shadow: 0px 10px 20px rgba(0,0,0,0.5);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+
+        .profile-container:hover .profile-dropdown {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-dropdown a {
+            color: var(--text-light);
+            padding: 12px 20px;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: background-color 0.2s;
+        }
+
+        .profile-dropdown a:hover {
+            background-color: #333;
+            color: var(--accent-hover);
+        }
+
+        .profile-dropdown hr {
+            border: 0;
+            border-top: 1px solid #444;
+            margin: 5px 0;
+        }
+
+        .signout-link {
+            color: #ef4444 !important;
+        }
+
+        main {
+            padding: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .video-feed {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .video-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .video-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        /* Professional Thumbnail Container */
+        .thumbnail-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            background-color: #000;
+        }
+
+        .thumbnail-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+
+        /* The Custom Duration Badge */
+        .duration-badge {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.85);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        /* Play icon that appears on hover */
+        .play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.9);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover .thumbnail-container img {
+            opacity: 0.6;
+        }
+
+        .video-card:hover .play-overlay {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .video-info {
+            padding: 20px;
+        }
+
+        .video-title {
+            font-size: 1.15rem;
+            margin: 0 0 12px 0;
+            font-weight: 700;
+            color: white;
+            line-height: 1.4;
+        }
+
+        .video-category {
+            display: inline-block;
+            background-color: rgba(59, 130, 246, 0.15);
+            color: var(--accent-hover);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .video-desc {
+            font-size: 0.9rem;
+            color: #a1a1aa;
+            line-height: 1.5;
+            margin: 0 0 15px 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; 
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .video-meta {
+            font-size: 0.85rem;
+            color: #71717a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #3f3f46;
+            padding-top: 12px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">NEXUSTREAM</div>
+        <nav class="nav-menu">
+            <a href="/upload">Upload Videos</a>
+            
+            <div class="profile-container">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile Picture" class="profile-icon">
+                <div class="profile-dropdown">
+                    <a href="#">Your Videos</a>
+                    <a href="#">Edit Profile</a>
+                    <a href="login.html">Login / Sign Up</a>
+                    <a href="#">Settings</a>
+                    <a href="#">Dark / Light Mode</a>
+                    <hr>
+                    <a href="#" class="signout-link">Sign Out</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Recommended Videos</h1>
+        
+        <section class="video-feed">
+            
+            <!-- Video 1 -->
+            <div class="video-card">
+                <div class="thumbnail-container">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=600&auto=format&fit=crop" alt="Web Development">
+                    <span class="duration-badge">14:25</span>
+                    <div class="play-overlay">▶</div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Building Next-Gen Web Apps with Python & Flask</h3>
+                    <span class="video-category">Technology</span>
+                    <p class="video-desc">A complete guide to structuring your backend architecture, managing databases, and serving dynamic content.</p>
+                    <div class="video-meta">
+                        <span>Nexus Admin</span>
+                        <span>Sep 25, 2026</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video 2 -->
+            <div class="video-card">
+                <div class="thumbnail-container">
+                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop" alt="Esports">
+                    <span class="duration-badge">08:42</span>
+                    <div class="play-overlay">▶</div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Valorant Global Championship: Top 10 Plays</h3>
+                    <span class="video-category">Gaming</span>
+                    <p class="video-desc">Incredible highlights, clutch moments, and insane strategy from the grand finals.</p>
+                    <div class="video-meta">
+                        <span>GamerZone</span>
+                        <span>Sep 24, 2026</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video 3 -->
+            <div class="video-card">
+                <div class="thumbnail-container">
+                    <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=600&auto=format&fit=crop" alt="Space">
+                    <span class="duration-badge">45:10</span>
+                    <div class="play-overlay">▶</div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Deep Space: Unlocking the Mysteries of Black Holes</h3>
+                    <span class="video-category">Science</span>
+                    <p class="video-desc">Analyzing the latest data from the James Webb Space Telescope and what it means for physics.</p>
+                    <div class="video-meta">
+                        <span>AstroGeek</span>
+                        <span>Sep 22, 2026</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video 4 -->
+            <div class="video-card">
+                <div class="thumbnail-container">
+                    <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=600&auto=format&fit=crop" alt="Travel">
+                    <span class="duration-badge">12:05</span>
+                    <div class="play-overlay">▶</div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Top 10 Hidden Gems to Visit in Europe This Summer</h3>
+                    <span class="video-category">Vlogs</span>
+                    <p class="video-desc">Join us as we explore breathtaking landscapes and secret spots away from the tourist crowds.</p>
+                    <div class="video-meta">
+                        <span>Wanderlust</span>
+                        <span>Sep 20, 2026</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video 5 -->
+            <div class="video-card">
+                <div class="thumbnail-container">
+                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=600&auto=format&fit=crop" alt="Education">
+                    <span class="duration-badge">22:30</span>
+                    <div class="play-overlay">▶</div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">How Artificial Intelligence is Changing Data Science</h3>
+                    <span class="video-category">Education</span>
+                    <p class="video-desc">A deep dive into machine learning models, neural networks, and the future of big data analytics.</p>
+                    <div class="video-meta">
+                        <span>Tech Academy</span>
+                        <span>Sep 18, 2026</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video 6 -->
+            <div class="video-card">
+                <div class="thumbnail-container">
+                    <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=600&auto=format&fit=crop" alt="Music">
+                    <span class="duration-badge">1:05:00</span>
+                    <div class="play-overlay">▶</div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Lo-Fi Beats to Relax, Code, and Study To</h3>
+                    <span class="video-category">Music</span>
+                    <p class="video-desc">A continuous mix of chill lo-fi hip hop tracks perfect for deep focus and productivity sessions.</p>
+                    <div class="video-meta">
+                        <span>ChillWave</span>
+                        <span>Sep 15, 2026</span>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+</body>
+</html>

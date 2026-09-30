@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Created - NEXUSTREAM</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="auth-page">
+<div class="auth-container">
+    <h1><a href="{{ url_for('home') }}">NEXUSTREAM</a></h1>
+    <h2>Account Created</h2>
+    <p class="auth-subtitle">Welcome, {{ username }}. Save this recovery code somewhere safe.</p>
+    <div class="recovery-code">{{ recovery_code }}</div>
+    <p class="security-note">This code is needed if you forget your password. It is shown only now, so save it before continuing.</p>
+    <a class="primary-button button-center" href="{{ url_for('login') }}">Continue to Login</a>
+</div>
+</body>
+</html>

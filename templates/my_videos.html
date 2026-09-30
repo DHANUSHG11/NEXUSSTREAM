@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Videos - NEXUSTREAM</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header>
+    <div class="logo"><a href="{{ url_for('home') }}">NEXUSTREAM</a></div>
+    <nav class="nav-menu">
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('upload') }}">Upload Videos</a>
+        <a href="{{ url_for('profile') }}">Edit Profile</a>
+        <a href="{{ url_for('logout') }}" class="signout-link">Sign Out</a>
+    </nav>
+</header>
+<main class="home-page">
+    <section class="home-heading">
+        <h1>Your Videos</h1>
+        <p>Videos uploaded by {{ current_user.username }}.</p>
+    </section>
+    <section class="video-grid">
+        {% if videos %}
+            {% for v in videos %}
+                <article class="video-card">
+                    <a href="{{ url_for('watch', video_id=v.id) }}">
+                        <div class="video-thumbnail">
+                            <video preload="metadata" muted>
+                                <source src="{{ url_for('media_video', filename=v.file_path) }}" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="video-card-content">
+                            <h3>{{ v.title }}</h3>
+                            <p class="video-category">{{ v.categories }}</p>
+                            {% if v.description %}<p>{{ v.description }}</p>{% endif %}
+                            <p class="video-date">Uploaded: {{ v.upload_date.strftime('%B %d, %Y') }}</p>
+                        </div>
+                    </a>
+                    <div class="video-owner-actions">
+                        <form method="POST" action="{{ url_for('delete_video', video_id=v.id) }}" onsubmit="return confirm('Delete this video permanently?');">
+                            <button type="submit" class="delete-button">Delete Video</button>
+                        </form>
+                    </div>
+                </article>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <h2>You haven't uploaded any videos yet.</h2>
+                <a class="primary-button" href="{{ url_for('upload') }}">Upload Your First Video</a>
+            </div>
+        {% endif %}
+    </section>
+</main>
+</body>
+</html>

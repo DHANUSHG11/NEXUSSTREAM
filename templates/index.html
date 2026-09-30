@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUSTREAM - Home</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-container">
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <header>
+
+        <div class="logo">
+            <a href="{{ url_for('home') }}">NEXUSTREAM</a>
+        </div>
+
+        <nav class="nav-menu">
+
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('upload') }}">Upload Videos</a>
+
+                <div class="profile-container">
+                    <button class="profile-button" type="button">
+                        <img
+                            {% if current_user.profile_photo %}
+                            src="{{ url_for('media_profile', filename=current_user.profile_photo) }}"
+                            {% else %}
+                            src="{{ url_for('static', filename='profile_photos/default-avatar.svg') }}"
+                            {% endif %}
+                            alt="Profile Picture"
+                            class="profile-icon"
+                        >
+                        <span>{{ current_user.username }}</span>
+                    </button>
+
+                    <div class="profile-dropdown">
+                        <span class="profile-welcome">
+                            Hello, {{ current_user.username }}
+                        </span>
+                        <a href="{{ url_for('my_videos') }}">Your Videos</a>
+                        <a href="{{ url_for('profile') }}">Edit Profile</a>
+                        <a href="{{ url_for('logout') }}" class="signout-link">
+                            Sign Out
+                        </a>
+                    </div>
+                </div>
+
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}">Register</a>
+            {% endif %}
+
+        </nav>
+
+    </header>
+
+    <main class="home-page">
+
+        <section class="home-heading">
+            <h1>Recommended Videos</h1>
+            <p>Explore videos across different categories.</p>
+        </section>
+
+        <div class="category-filters">
+            <a href="{{ url_for('home') }}">All</a>
+            <a href="{{ url_for('home', category='Gaming') }}">Gaming</a>
+            <a href="{{ url_for('home', category='Music') }}">Music</a>
+            <a href="{{ url_for('home', category='Education') }}">Education</a>
+            <a href="{{ url_for('home', category='Vlogs') }}">Vlogs</a>
+            <a href="{{ url_for('home', category='Technology') }}">Technology</a>
+            <a href="{{ url_for('home', category='Cooking') }}">Cooking</a>
+            <a href="{{ url_for('home', category='Sports') }}">Sports</a>
+            <a href="{{ url_for('home', category='News') }}">News</a>
+            <a href="{{ url_for('home', category='Comedy') }}">Comedy</a>
+            <a href="{{ url_for('home', category='Fitness') }}">Fitness</a>
+            <a href="{{ url_for('home', category='Entertainment') }}">Entertainment</a>
+        </div>
+
+        <section class="video-grid">
+
+            {% if videos %}
+                {% for v in videos %}
+                    <article class="video-card">
+                        <a href="{{ url_for('watch', video_id=v.id) }}">
+                            <div class="video-thumbnail">
+                                <video preload="metadata" muted>
+                                    <source
+                                        src="{{ url_for('media_video', filename=v.file_path) }}"
+                                        type="video/mp4">
+                                </video>
+                            </div>
+
+                            <div class="video-card-content">
+                                <h3>{{ v.title }}</h3>
+
+                                <p class="video-uploader">
+                                    Uploaded by: {{ v.uploader.username }}
+                                </p>
+
+                                <p class="video-category">
+                                    {{ v.categories }}
+                                </p>
+
+                                {% if v.description %}
+                                    <p>{{ v.description }}</p>
+                                {% endif %}
+
+                                <p class="video-date">
+                                    Uploaded: {{ v.upload_date.strftime('%B %d, %Y') }}
+                                </p>
+                            </div>
+                        </a>
+                    </article>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <h2>No videos available yet</h2>
+                    {% if current_user.is_authenticated %}
+                        <p>Upload your first video to populate the home feed.</p>
+                        <a class="primary-button" href="{{ url_for('upload') }}">
+                            Upload a Video
+                        </a>
+                    {% else %}
+                        <p>Log in and upload a video to populate the home feed.</p>
+                        <a class="primary-button" href="{{ url_for('login') }}">
+                            Log In
+                        </a>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+        </section>
+
+    </main>
+
+</body>
+</html>
